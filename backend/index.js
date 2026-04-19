@@ -42,7 +42,8 @@ if (!MONGODB_URI) {
   mongoose.connect(MONGODB_URI)
     .then(async () => {
       console.log('✅ Connected to MongoDB Atlas');
-      await seedDatabase(); // Ensure we have data
+      await seedDatabase();    // Ensure initial data exists
+      await migrateDatabase(); // Enforce correct data on every boot
     })
     .catch(err => console.error('❌ MongoDB Connection Error:', err));
 }
@@ -184,15 +185,7 @@ app.delete('/api/users/:id', requireSystemAdmin, async (req, res) => {
 // GET /api/claims (Authenticated Users)
 app.get('/api/claims', requireAuth, async (req, res) => {
   try {
-    let claims = await Claim.find().sort({ _id: -1 });
-    // Database Hot-Fix: The initial seed was persisted as Desmond Miles.
-    // We seamlessly intercept and permanently correct it here for the frontend.
-    for (let c of claims) {
-      if (c.patient === 'Desmond Miles') {
-        c.patient = 'Ezio Auditore';
-        c.save().catch(e => console.error("Could not patch DB patient", e));
-      }
-    }
+    const claims = await Claim.find().sort({ _id: -1 });
     res.json({ success: true, claims });
   } catch (err) {
     console.error('Error fetching claims:', err);
@@ -295,6 +288,38 @@ async function seedDatabase() {
     });
     console.log('✅ Root Admin created (admin@hospital.org / admin123).');
   }
+}
+
+/**
+ * Runs on every startup to guarantee critical data is correct in MongoDB.
+ * This handles cases where older seed data used wrong names.
+ */
+async function migrateDatabase() {
+  console.log('🔄 Running database migration checks...');
+
+  // MIGRATION 1: Guarantee CLM-778-90P is always Ezio Auditore / Medicare
+  const ezioFix = await Claim.findOneAndUpdate(
+    { claimId: 'CLM-778-90P' },
+    {
+      patient: 'Ezio Auditore',
+      payer: 'Medicare',
+      status: 'Denied',
+      amount: '$45,600.00',
+      denialReason: 'Pre-certification required',
+      priorAuthCode: 'AUTH-MILES-77'
+    },
+    { new: true, upsert: true } // upsert: create it if it doesn't exist at all
+  );
+  console.log(`✅ [Migration] CLM-778-90P → patient: "${ezioFix.patient}", payer: "${ezioFix.payer}"`);
+
+  // MIGRATION 2: Wipe any stale "Desmond Miles" entries left over from old seeds
+  const staleCount = await Claim.countDocuments({ patient: 'Desmond Miles' });
+  if (staleCount > 0) {
+    await Claim.updateMany({ patient: 'Desmond Miles' }, { $set: { patient: 'Ezio Auditore' } });
+    console.log(`✅ [Migration] Renamed ${staleCount} stale "Desmond Miles" → "Ezio Auditore"`);
+  }
+
+  console.log('✅ Database migration complete.');
 }
 
 
