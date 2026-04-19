@@ -244,7 +244,7 @@ async function seedDatabase() {
       { claimId: "CLM-105-99B", patient: "Sarah Blake", amount: "$875.00", status: "Appealing", payer: "Cigna", denialReason: "Out of network" },
       { claimId: "CLM-202-55K", patient: "Julian Voss", amount: "$21,100.00", status: "Denied", payer: "BlueCross", denialReason: "Missing clinical notes", priorAuthCode: "AUTH-VOSS-99" },
       { claimId: "CLM-443-11L", patient: "Fiona Garrity", amount: "$1,450.00", status: "Denied", payer: "Aetna", denialReason: "Duplicate claim", priorAuthCode: "AUTH-GARRITY-11" },
-      { claimId: "CLM-778-90P", patient: "Desmond Miles", amount: "$45,600.00", status: "Denied", payer: "Medicare", denialReason: "Pre-certification required", priorAuthCode: "AUTH-MILES-77" },
+      { claimId: "CLM-778-90P", patient: "Ezio Auditore", amount: "$45,600.00", status: "Denied", payer: "Medicare", denialReason: "Pre-certification required", priorAuthCode: "AUTH-MILES-77" },
       { claimId: "CLM-991-04D", patient: "Lara Croft", amount: "$6,800.00", status: "Denied", payer: "Humana", denialReason: "Invalid procedure code", priorAuthCode: "AUTH-CROFT-00" },
       { claimId: "CLM-552-33W", patient: "Arthur Morgan", amount: "$15,200.00", status: "Denied", payer: "Aetna", denialReason: "Medical necessity", priorAuthCode: "AUTH-MORGAN-55" },
       // Historical successes to seed the baseline $43,250 Revenue
