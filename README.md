@@ -29,7 +29,7 @@ graph TD
 The dashboard includes an **Audit History** tab that provides full transparency into the agent's actions. It automatically parses the agent's end-to-end execution data to extract and display the exact clinical justification logic written by the agent during the appeal submission, complete with referenced trial data.
 
 ### ⚡ Async Polling Architecture
-To ensure reliability on the cloud (AWS App Runner), the platform uses a **True Asynchronous** orchestration pattern. 
+To ensure reliability on the cloud (Google Cloud Run), the platform uses a **True Asynchronous** orchestration pattern. 
 - The Backend initiates the agent and returns a `run_id` immediately.
 - The Dashboard polls for status every 10 seconds.
 - This bypasses standard 60-second cloud gateway timeouts, allowing for complex 5+ minute research and automation tasks without connection drops.
@@ -38,8 +38,8 @@ To ensure reliability on the cloud (AWS App Runner), the platform uses a **True 
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/revrecover.git
-cd revrecover
+git clone https://github.com/parulmalhotraiitk/RevRecoverTinyFish.git
+cd RevRecoverTinyFish
 ```
 
 ### 2. Configure the Backend
@@ -114,7 +114,7 @@ RevRecover is designed to handle multiple roles within the healthcare ecosystem.
 ## 🎖️ Enterprise Proof: Live Medicare Demo
 To demonstrate the agent's ability to interact with an **Official US Government Site**:
 
-1.  **Set Credentials in AWS:**
+1.  **Set Credentials in Google Cloud Run (Env Vars):**
     *   `PAYER_BLUEBUTTON_USER` = `BBUser00000`
     *   `PAYER_BLUEBUTTON_PASS` = `PW00000!`
 2.  **Dashboard Setup:** 

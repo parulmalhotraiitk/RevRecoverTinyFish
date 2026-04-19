@@ -50,7 +50,7 @@ To fully appreciate the agent's versatility, we recommend two distinct testing p
 *   **Voice**: [ElevenLabs](https://elevenlabs.io/) (TTS)
 
 ### **Infrastructure & Observability**
-*   **Hosting**: [AWS Amplify](https://aws.amazon.com/amplify/) & [AWS App Runner](https://aws.amazon.com/apprunner/)
+*   **Hosting**: [Google Cloud Run](https://cloud.google.com/run/) & [Google Artifact Registry](https://cloud.google.com/artifact-registry)
 *   **Observability (Traces)**: [AgentOps](https://agentops.ai/) (v3 OTLP Integration)
 *   **Logging**: [Axiom](https://axiom.co/) (Structured Logging)
 
