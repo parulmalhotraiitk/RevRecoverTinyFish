@@ -184,7 +184,15 @@ app.delete('/api/users/:id', requireSystemAdmin, async (req, res) => {
 // GET /api/claims (Authenticated Users)
 app.get('/api/claims', requireAuth, async (req, res) => {
   try {
-    const claims = await Claim.find().sort({ _id: -1 });
+    let claims = await Claim.find().sort({ _id: -1 });
+    // Database Hot-Fix: The initial seed was persisted as Desmond Miles.
+    // We seamlessly intercept and permanently correct it here for the frontend.
+    for (let c of claims) {
+      if (c.patient === 'Desmond Miles') {
+        c.patient = 'Ezio Auditore';
+        c.save().catch(e => console.error("Could not patch DB patient", e));
+      }
+    }
     res.json({ success: true, claims });
   } catch (err) {
     console.error('Error fetching claims:', err);
