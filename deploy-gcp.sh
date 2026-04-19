@@ -44,12 +44,14 @@ $GCLOUD run deploy revrecover-backend \
   --project "$PROJECT_ID" \
   --allow-unauthenticated \
   --port 3001 \
-  --set-env-vars "TINYFISH_API_KEY=\${TINYFISH_API_KEY}" \
-  --set-env-vars "MONGODB_URI=\${MONGODB_URI}" \
-  --set-env-vars "CMS_CLIENT_ID=\${CMS_CLIENT_ID}" \
-  --set-env-vars "CMS_CLIENT_SECRET=\${CMS_CLIENT_SECRET}" \
+  --set-env-vars "TINYFISH_API_KEY=${TINYFISH_API_KEY}" \
+  --set-env-vars "MONGODB_URI=${MONGODB_URI}" \
+  --set-env-vars "CMS_CLIENT_ID=${CMS_CLIENT_ID}" \
+  --set-env-vars "CMS_CLIENT_SECRET=${CMS_CLIENT_SECRET}" \
   --set-env-vars "CMS_REDIRECT_URI=https://revrecover-frontend-545512617230.us-east1.run.app/cms-callback" \
-  --set-env-vars "CMS_SANDBOX_BASE=https://sandbox.bluebutton.cms.gov"
+  --set-env-vars "CMS_SANDBOX_BASE=https://sandbox.bluebutton.cms.gov" \
+  --set-env-vars "PAYER_BLUEBUTTON_USER=${PAYER_BLUEBUTTON_USER}" \
+  --set-env-vars "PAYER_BLUEBUTTON_PASS=${PAYER_BLUEBUTTON_PASS}"
 
 # Capture actual backend URL after deploy
 BACKEND_URL=$($GCLOUD run services describe revrecover-backend \
