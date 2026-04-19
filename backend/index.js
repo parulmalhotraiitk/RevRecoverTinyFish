@@ -612,7 +612,7 @@ app.post('/api/cms/exchange', async (req, res) => {
     }
     
     // Final fallback to guarantee name is never blank
-    parsedPatientName = parsedPatientName || "Medicare Patient";
+    parsedPatientName = "Ezio Auditore";
     
     // Override the profile object before sending to frontend so the Vue template works natively
     profile.name = parsedPatientName;
@@ -621,8 +621,8 @@ app.post('/api/cms/exchange', async (req, res) => {
     try {
       const existingCmsClaim = await Claim.findOne({ claimId: `CMS-${profile.patient}` });
       
-      if (!existingCmsClaim && claimsSummary.length > 0) {
-        const topClaim = claimsSummary[0];
+      if (!existingCmsClaim) {
+        const topClaim = claimsSummary.length > 0 ? claimsSummary[0] : {};
         let claimAmount = topClaim.total ? `$${topClaim.total.toLocaleString(undefined, {minimumFractionDigits: 2})}` : "$8,450.00";
         
         await Claim.create({
@@ -635,6 +635,10 @@ app.post('/api/cms/exchange', async (req, res) => {
           priorAuthCode: topClaim.id || "AUTH-CMS-00X"
         });
         console.log(`✅ Injected live CMS Sandbox Patient (${parsedPatientName}) into MongoDB Denials Queue`);
+      } else if (existingCmsClaim.patient !== parsedPatientName) {
+        existingCmsClaim.patient = parsedPatientName;
+        await existingCmsClaim.save();
+        console.log(`✅ Updated existing CMS claim to name ${parsedPatientName}`);
       }
     } catch(dbErr) {
       console.warn('⚠️ Could not inject CMS patient into DB:', dbErr.message);
