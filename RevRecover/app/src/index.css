@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f8fafc; /* slate-50 */
+    --foreground: #0f172a; /* slate-900 */
+    
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    
+    --primary: #0284c7; /* sky-600 */
+    --primary-foreground: #ffffff;
+    
+    --secondary: #e0f2fe; /* sky-100 */
+    --secondary-foreground: #0369a1; /* sky-700 */
+
+    --muted: #f1f5f9; /* slate-100 */
+    --muted-foreground: #64748b; /* slate-500 */
+
+    --accent: #f0fdf4; /* green-50 */
+    --accent-foreground: #15803d; /* green-700 */
+
+    --destructive: #fef2f2; /* red-50 */
+    --destructive-foreground: #b91c1c; /* red-700 */
+
+    --border: #e2e8f0; /* slate-200 */
+    --input: #e2e8f0;
+    --ring: #0284c7;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: #020617; /* slate-950 */
+    --foreground: #f8fafc; /* slate-50 */
+    
+    --card: #0f172a; /* slate-900 */
+    --card-foreground: #f8fafc;
+    
+    --primary: #38bdf8; /* sky-400 */
+    --primary-foreground: #020617;
+    
+    --secondary: #1e293b; /* slate-800 */
+    --secondary-foreground: #f8fafc;
+
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8; /* slate-400 */
+
+    --accent: #14532d; /* green-900 */
+    --accent-foreground: #4ade80; /* green-400 */
+
+    --destructive: #7f1d1d; /* red-900 */
+    --destructive-foreground: #f87171; /* red-400 */
+
+    --border: #1e293b;
+    --input: #1e293b;
+    --ring: #38bdf8;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+/* Glass table row hover effect */
+.glass-row:hover {
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.05), transparent);
+  transition: background 0.2s ease-in-out;
+}

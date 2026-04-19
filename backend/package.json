@@ -1,0 +1,29 @@
+{
+  "name": "agent-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "node -e \"const fs=require('fs'); fs.writeFileSync('build-info.json', JSON.stringify({timestamp: new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}));\"",
+    "start": "npm run build && node index.js",
+    "seed:synthea": "node scripts/seedSynthea.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
+    "node-fetch": "^2.7.0",
+    "openai": "^6.34.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
